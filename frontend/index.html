@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <meta
+
+        name="viewport"
+
+        content="width=device-width, initial-scale=1.0"
+
+    >
+
+
+
+    <title>JEMG Score</title>
+
+
+
+    <link
+
+        rel="stylesheet"
+
+        href="/static/css/style.css"
+
+    >
+
+
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+
+
+<div class="layout">
+
+
+
+
+
+    <!-- =========================
+
+         MENU LATERAL
+
+    ========================== -->
+
+
+
+    <aside class="sidebar">
+
+
+
+        <div class="logo">
+
+
+
+            JEMG
+
+            <span>SCORE</span>
+
+
+
+        </div>
+
+
+
+
+
+        <div class="menu">
+
+
+
+
+
+            <button
+
+                class="menu-button active"
+
+                onclick="mostrarPagina('dashboard')"
+
+            >
+
+                🏠 Dashboard
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="menu-button"
+
+                onclick="mostrarPagina('competicoes')"
+
+            >
+
+                🏆 Competições
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="menu-button"
+
+                onclick="mostrarPagina('modalidades')"
+
+            >
+
+                🏅 Modalidades
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="menu-button"
+
+                onclick="mostrarPagina('escolas')"
+
+            >
+
+                🏫 Escolas
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="menu-button"
+
+                onclick="mostrarPagina('equipes')"
+
+            >
+
+                👥 Equipes
+
+            </button>
+
+
+
+
+
+            <button
+                class="menu-button"
+                onclick="mostrarPagina('partidas')"
+            >
+                📅 Partidas
+            </button>
+
+
+
+
+
+            <button class="menu-button">
+
+                📊 Classificação
+
+            </button>
+
+
+
+
+
+            <button class="menu-button">
+
+                🔀 Chaveamento
+
+            </button>
+
+
+
+
+
+            <button class="menu-button">
+
+                📈 Estatísticas
+
+            </button>
+
+
+
+
+
+        </div>
+
+
+
+    </aside>
+
+
+
+
+
+
+
+    <!-- =========================
+
+         CONTEÚDO
+
+    ========================== -->
+
+
+
+    <main class="main">
+
+
+
+
+
+        <!-- =========================
+
+             BARRA SUPERIOR
+
+        ========================== -->
+
+
+
+        <header class="topbar">
+
+
+
+            <div>
+
+
+
+                <h1 id="tituloPagina">
+
+                    Dashboard
+
+                </h1>
+
+
+
+                <p id="subtituloPagina">
+
+                    Gerenciamento das competições JEMG
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+            <div class="topbar-actions">
+
+
+
+
+
+                <select
+
+                    id="competicaoAtual"
+
+                    onchange="selecionarCompeticao()"
+
+                >
+
+
+
+                    <option value="">
+
+                        Selecionar competição
+
+                    </option>
+
+
+
+                </select>
+
+
+
+
+
+                <button
+
+                    class="btn"
+
+                    onclick="abrirModalCompeticao()"
+
+                >
+
+                    + Nova competição
+
+                </button>
+
+
+
+
+
+            </div>
+
+
+
+        </header>
+
+
+
+
+
+
+
+        <!-- =========================
+
+             DASHBOARD
+
+        ========================== -->
+
+
+
+        <section
+
+            id="pagina-dashboard"
+
+            class="pagina"
+
+        >
+
+
+
+
+
+            <div class="cards">
+
+
+
+
+
+                <div class="card">
+
+
+
+                    <span>
+
+                        Competições
+
+                    </span>
+
+
+
+                    <strong id="totalCompeticoes">
+
+                        0
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+                <div class="card">
+
+
+
+                    <span>
+
+                        Modalidades
+
+                    </span>
+
+
+
+                    <strong id="totalModalidades">
+
+                        0
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+                <div class="card">
+
+
+
+                    <span>
+
+                        Escolas
+
+                    </span>
+
+
+
+                    <strong id="totalEscolas">
+
+                        0
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+                <div class="card">
+
+
+
+                    <span>
+
+                        Equipes
+
+                    </span>
+
+
+
+                    <strong id="totalEquipes">
+
+                        0
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="panel">
+
+
+
+                <h2>
+
+                    Competições cadastradas
+
+                </h2>
+
+
+
+
+
+                <table>
+
+
+
+                    <thead>
+
+
+
+                        <tr>
+
+
+
+                            <th>
+
+                                Competição
+
+                            </th>
+
+
+
+                            <th>
+
+                                Ano
+
+                            </th>
+
+
+
+                            <th>
+
+                                Status
+
+                            </th>
+
+
+
+                        </tr>
+
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody id="listaCompeticoes">
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- =========================
+
+             COMPETIÇÕES
+
+        ========================== -->
+
+
+
+        <section
+
+            id="pagina-competicoes"
+
+            class="pagina"
+
+            style="display:none;"
+
+        >
+
+
+
+
+
+            <div class="panel">
+
+
+
+                <div class="panel-header">
+
+
+
+                    <div>
+
+
+
+                        <h2>
+
+                            Competições
+
+                        </h2>
+
+
+
+                        <p>
+
+                            Gerencie as edições do JEMG.
+
+                        </p>
+
+
+
+                    </div>
+
+
+
+
+
+                    <button
+
+                        class="btn"
+
+                        onclick="abrirModalCompeticao()"
+
+                    >
+
+                        + Nova competição
+
+                    </button>
+
+
+
+                </div>
+
+
+
+
+
+                <table>
+
+
+
+                    <thead>
+
+
+
+                        <tr>
+
+
+
+                            <th>
+
+                                Competição
+
+                            </th>
+
+
+
+                            <th>
+
+                                Ano
+
+                            </th>
+
+
+
+                            <th>
+
+                                Status
+
+                            </th>
+
+
+
+                        </tr>
+
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody id="listaCompeticoesPagina">
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- =========================
+
+             MODALIDADES
+
+        ========================== -->
+
+
+
+        <section
+
+            id="pagina-modalidades"
+
+            class="pagina"
+
+            style="display:none;"
+
+        >
+
+
+
+
+
+            <div class="panel">
+
+
+
+
+
+                <div class="panel-header">
+
+
+
+                    <div>
+
+
+
+                        <h2>
+
+                            Modalidades
+
+                        </h2>
+
+
+
+                        <p>
+
+                            Modalidades da competição selecionada.
+
+                        </p>
+
+
+
+                    </div>
+
+
+
+
+
+                    <button
+
+                        class="btn"
+
+                        onclick="abrirModalModalidade()"
+
+                    >
+
+                        + Nova modalidade
+
+                    </button>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <table>
+
+
+
+                    <thead>
+
+
+
+                        <tr>
+
+
+
+                            <th>
+
+                                Modalidade
+
+                            </th>
+
+
+
+                            <th>
+
+                                Módulo
+
+                            </th>
+
+
+
+                            <th>
+
+                                Gênero
+
+                            </th>
+
+
+
+                            <th>
+
+                                Formato
+
+                            </th>
+
+
+
+                        </tr>
+
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody id="listaModalidades">
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- =========================
+
+             ESCOLAS
+
+        ========================== -->
+
+
+
+        <section
+
+            id="pagina-escolas"
+
+            class="pagina"
+
+            style="display:none;"
+
+        >
+
+
+
+
+
+            <div class="panel">
+
+
+
+
+
+                <div class="panel-header">
+
+
+
+                    <div>
+
+
+
+                        <h2>
+
+                            Escolas
+
+                        </h2>
+
+
+
+                        <p>
+
+                            Escolas participantes da competição.
+
+                        </p>
+
+
+
+                    </div>
+
+
+
+
+
+                    <button
+
+                        class="btn"
+
+                        onclick="abrirModalEscola()"
+
+                    >
+
+                        + Nova escola
+
+                    </button>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <table>
+
+
+
+                    <thead>
+
+
+
+                        <tr>
+
+
+
+                            <th>
+
+                                Escola
+
+                            </th>
+
+
+
+                            <th>
+
+                                Município
+
+                            </th>
+
+
+
+                            <th>
+
+                                Status
+
+                            </th>
+
+
+
+                        </tr>
+
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody id="listaEscolas">
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- =========================
+
+             EQUIPES
+
+        ========================== -->
+
+
+
+        <section
+
+            id="pagina-equipes"
+
+            class="pagina"
+
+            style="display:none;"
+
+        >
+
+
+
+
+
+            <div class="panel">
+
+
+
+
+
+                <div class="panel-header">
+
+
+
+                    <div>
+
+
+
+                        <h2>
+
+                            Equipes
+
+                        </h2>
+
+
+
+                        <p>
+
+                            Equipes inscritas na competição selecionada.
+
+                        </p>
+
+
+
+                    </div>
+
+
+
+
+
+                    <button
+
+                        class="btn"
+
+                        onclick="abrirModalEquipe()"
+
+                    >
+
+                        + Nova equipe
+
+                    </button>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <table>
+
+
+
+                    <thead>
+
+
+
+                        <tr>
+
+
+
+                            <th>
+
+                                Equipe
+
+                            </th>
+
+
+
+                            <th>
+
+                                Escola
+
+                            </th>
+
+
+
+                            <th>
+
+                                Modalidade
+
+                            </th>
+
+
+
+                            <th>
+
+                                Módulo
+
+                            </th>
+
+
+
+                            <th>
+
+                                Gênero
+
+                            </th>
+
+
+
+                        </tr>
+
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody id="listaEquipes">
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+    
+
+        <!-- =========================
+             PARTIDAS
+        ========================== -->
+        <section id="pagina-partidas" class="pagina" style="display:none;">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Partidas</h2>
+                        <p>Cadastre, acompanhe e registre os resultados das partidas.</p>
+                    </div>
+                    <button class="btn" onclick="abrirModalPartida()">+ Nova partida</button>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label>Filtrar por modalidade</label>
+                    <select id="filtroModalidadePartidas" onchange="carregarPartidas()">
+                        <option value="">Todas as modalidades</option>
+                    </select>
+                </div>
+
+                <div class="panel" style="margin:20px 0; border:1px solid #ddd;">
+                    <div class="panel-header">
+                        <div>
+                            <h3>🎲 Sorteio de confrontos</h3>
+                            <p>Escolha modalidade, módulo e sexo. O sistema embaralha somente as equipes dessa combinação.</p>
+                        </div>
+                        <button class="btn" type="button" onclick="sortearConfrontos()">🎲 Sortear equipes</button>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:15px;">
+                        <div>
+                            <label>Modalidade</label>
+                            <select id="sorteioModalidade" onchange="atualizarFiltrosSorteio()">
+                                <option value="">Selecionar modalidade</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Módulo</label>
+                            <select id="sorteioModulo" onchange="atualizarFiltrosSorteio()">
+                                <option value="">Todos os módulos</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Sexo</label>
+                            <select id="sorteioGenero" onchange="atualizarFiltrosSorteio()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="resultadoSorteio" style="margin-top:20px;"></div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead><tr>
+                            <th>Data</th><th>Horário</th><th>Modalidade</th><th>Confronto</th><th>Fase</th><th>Grupo</th><th>Local</th><th>Placar</th><th>Status</th><th>Ações</th>
+                        </tr></thead>
+                        <tbody id="listaPartidas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+
+     MODAL COMPETIÇÃO
+
+\================================================== -->
+
+
+
+<div
+
+    class="modal"
+
+    id="modalCompeticao"
+
+>
+
+
+
+
+
+    <div class="modal-content">
+
+
+
+
+
+        <h2>
+
+            Nova competição
+
+        </h2>
+
+
+
+
+
+        <label>
+
+            Nome da competição
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="nomeCompeticao"
+
+            type="text"
+
+            placeholder="Ex.: JEMG"
+
+        >
+
+
+
+
+
+        <label>
+
+            Ano
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="anoCompeticao"
+
+            type="number"
+
+            value="2026"
+
+        >
+
+
+
+
+
+        <div class="modal-actions">
+
+
+
+            <button
+
+                class="btn secondary"
+
+                onclick="fecharModalCompeticao()"
+
+            >
+
+                Cancelar
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="btn"
+
+                onclick="criarCompeticao()"
+
+            >
+
+                Criar competição
+
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+
+     MODAL MODALIDADE
+
+\================================================== -->
+
+
+
+<div
+
+    class="modal"
+
+    id="modalModalidade"
+
+>
+
+
+
+
+
+    <div class="modal-content">
+
+
+
+
+
+        <h2>
+
+            Nova modalidade
+
+        </h2>
+
+
+
+
+
+        <label>
+
+            Modalidade
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="nomeModalidade"
+
+            type="text"
+
+            placeholder="Ex.: Futsal"
+
+        >
+
+
+
+
+
+        <label>
+
+            Módulo
+
+        </label>
+
+
+
+
+
+        <select id="moduloModalidade">
+
+
+
+            <option value="Módulo 1">
+
+                Módulo 1
+
+            </option>
+
+
+
+            <option value="Módulo 2">
+
+                Módulo 2
+
+            </option>
+
+
+
+        </select>
+
+
+
+
+
+        <label>
+
+            Gênero
+
+        </label>
+
+
+
+
+
+        <select id="generoModalidade">
+
+
+
+            <option value="Masculino">
+
+                Masculino
+
+            </option>
+
+
+
+            <option value="Feminino">
+
+                Feminino
+
+            </option>
+
+
+
+            <option value="Misto">
+
+                Misto
+
+            </option>
+
+
+
+        </select>
+
+
+
+
+
+        <label>
+
+            Formato
+
+        </label>
+
+
+
+
+
+        <select id="formatoModalidade">
+
+
+
+            <option value="Grupos + Mata-mata">
+
+                Grupos + Mata-mata
+
+            </option>
+
+
+
+            <option value="Pontos corridos">
+
+                Pontos corridos
+
+            </option>
+
+
+
+            <option value="Mata-mata">
+
+                Mata-mata
+
+            </option>
+
+
+
+        </select>
+
+        <label>
+            Quantidade de quadras/locais simultâneos
+        </label>
+
+        <input
+            id="quadrasModalidade"
+            type="number"
+            min="1"
+            step="1"
+            value="1"
+            placeholder="Ex.: 2"
+        >
+
+
+
+
+
+
+        <div class="modal-actions">
+
+
+
+            <button
+
+                class="btn secondary"
+
+                onclick="fecharModalModalidade()"
+
+            >
+
+                Cancelar
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="btn"
+
+                onclick="criarModalidade()"
+
+            >
+
+                Criar modalidade
+
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+
+     MODAL ESCOLA
+
+\================================================== -->
+
+
+
+<div
+
+    class="modal"
+
+    id="modalEscola"
+
+>
+
+
+
+
+
+    <div class="modal-content">
+
+
+
+
+
+        <h2>
+
+            Nova escola
+
+        </h2>
+
+
+
+
+
+        <label>
+
+            Nome da escola
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="nomeEscola"
+
+            type="text"
+
+            placeholder="Ex.: Escola Estadual Exemplo"
+
+        >
+
+
+
+
+
+        <label>
+
+            Município
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="cidadeEscola"
+
+            type="text"
+
+            placeholder="Ex.: Brasilândia de Minas"
+
+        >
+
+
+
+
+
+        <div class="modal-actions">
+
+
+
+            <button
+
+                class="btn secondary"
+
+                onclick="fecharModalEscola()"
+
+            >
+
+                Cancelar
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="btn"
+
+                onclick="criarEscola()"
+
+            >
+
+                Cadastrar escola
+
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+
+     MODAL EQUIPE
+
+\================================================== -->
+
+
+
+<div
+
+    class="modal"
+
+    id="modalEquipe"
+
+>
+
+
+
+
+
+    <div class="modal-content">
+
+
+
+
+
+        <h2>
+
+            Nova equipe
+
+        </h2>
+
+
+
+
+
+        <label>
+
+            Escola
+
+        </label>
+
+
+
+
+
+        <select id="escolaEquipe">
+
+
+
+            <option value="">
+
+                Selecionar escola
+
+            </option>
+
+
+
+        </select>
+
+
+
+
+
+        <label>
+
+            Modalidade
+
+        </label>
+
+
+
+
+
+        <select id="modalidadeEquipe">
+
+
+
+            <option value="">
+
+                Selecionar modalidade
+
+            </option>
+
+
+
+        </select>
+
+
+
+
+
+        <label>
+
+            Nome da equipe
+
+        </label>
+
+
+
+
+
+        <input
+
+            id="nomeEquipe"
+
+            type="text"
+
+            placeholder="Ex.: E.E. João Silva"
+
+        >
+
+
+
+
+
+        <div class="modal-actions">
+
+
+
+            <button
+
+                class="btn secondary"
+
+                onclick="fecharModalEquipe()"
+
+            >
+
+                Cancelar
+
+            </button>
+
+
+
+
+
+            <button
+
+                class="btn"
+
+                onclick="criarEquipe()"
+
+            >
+
+                Criar equipe
+
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ==================================================
+     MODAL PARTIDA
+================================================== -->
+<div class="modal" id="modalPartida">
+    <div class="modal-content">
+        <h2 id="tituloModalPartida">Nova partida</h2>
+        <label>Modalidade</label>
+        <select id="modalidadePartida" onchange="carregarEquipesPartida()"><option value="">Selecionar modalidade</option></select>
+        <label>Equipe A</label>
+        <select id="equipeAPartida"><option value="">Selecionar equipe</option></select>
+        <label>Equipe B</label>
+        <select id="equipeBPartida"><option value="">Selecionar equipe</option></select>
+        <label>Data</label><input id="dataPartida" type="date">
+        <label>Horário</label><input id="horarioPartida" type="time">
+        <label>Local</label><input id="localPartida" type="text" placeholder="Ex.: Ginásio Municipal">
+        <label>Fase</label>
+        <select id="fasePartida">
+            <option value="Fase de Grupos">Fase de Grupos</option><option value="Oitavas de Final">Oitavas de Final</option><option value="Quartas de Final">Quartas de Final</option><option value="Semifinal">Semifinal</option><option value="Disputa de 3º Lugar">Disputa de 3º Lugar</option><option value="Final">Final</option>
+        </select>
+        <label>Grupo</label><input id="grupoPartida" type="text" placeholder="Ex.: Grupo A">
+        <div style="display:flex; gap:12px;">
+            <div style="flex:1;"><label id="rotuloPlacarA">Placar A</label><input id="placarAPartida" type="number" min="0" placeholder="0"></div>
+            <div style="flex:1;"><label id="rotuloPlacarB">Placar B</label><input id="placarBPartida" type="number" min="0" placeholder="0"></div>
+        </div>
+        <div id="parciaisPartida" style="display:none;margin-top:12px;"></div>
+        <label>Status</label>
+        <select id="statusPartida"><option value="Agendada">Agendada</option><option value="Em andamento">Em andamento</option><option value="Finalizada">Finalizada</option><option value="Cancelada">Cancelada</option></select>
+        <div class="modal-actions"><button class="btn secondary" onclick="fecharModalPartida()">Cancelar</button><button class="btn" onclick="salvarPartida()">Salvar partida</button></div>
+    </div>
+</div>
+
+<script src="/static/js/app.js"></script>
+
+
+
+
+
+</body>
+
+
+
+</html>
